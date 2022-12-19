@@ -1,0 +1,25 @@
+{
+  "name": "ocr-poc",
+  "version": "0.0.1",
+  "description": "OCR POC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexanderczigler/ocr-poc.git"
+  },
+  "keywords": [
+    "ocr"
+  ],
+  "author": "Alexander Czigler <dev@ilix.se>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexanderczigler/ocr-poc/issues"
+  },
+  "homepage": "https://github.com/alexanderczigler/ocr-poc#readme",
+  "dependencies": {
+    "node-tesseract-ocr": "^2.2.1"
+  }
+}
