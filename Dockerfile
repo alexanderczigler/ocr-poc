@@ -1,7 +1,7 @@
-FROM ubuntu:kinetic
+FROM alexanderczigler/ubuntu-ocr:kinetic
 
 RUN apt-get update
-RUN apt-get -y install ghostscript nodejs npm pdftk poppler-utils tesseract-ocr tesseract-ocr-swe
+RUN apt-get -y install nodejs npm
 
 WORKDIR /app
 ADD package*json /app/
