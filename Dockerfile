@@ -12,6 +12,5 @@ ADD index.js /app/index.js
 ADD input /app/input
 RUN mkdir /app/output
 
-RUN ls /usr/share/tesseract-ocr/
 ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata
 CMD ["node", "index.js"]
