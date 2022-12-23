@@ -1,5 +1,6 @@
 const fs = require("fs");
 const { recognize } = require("node-tesseract-ocr");
+const PdfOcr = require("node-pdf-ocr");
 
 const languages = ["eng", "swe"];
 const supportedFormats = [
@@ -15,24 +16,42 @@ const supportedFormats = [
 const processes = [];
 
 fs.readdirSync(`${__dirname}/input`).forEach((file) => {
-  if (!supportedFormats.includes(file.toLowerCase().split(".").pop())) return; // Skip unsupported formats
+  const fileExtension = file.split(".").pop();
+  if (!supportedFormats.includes(fileExtension)) return; // Skip unsupported formats
 
-  languages.forEach((lang) => {
-    processes.push(
-      recognize(`${__dirname}/input/${file}`, {
-        lang,
-        oem: 1,
-        psm: 3,
-      })
-        .then((text) => {
-          fs.writeFileSync(`${__dirname}/output/${lang}-${file}.txt`, text);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        })
-    );
-  });
+  switch (fileExtension) {
+    case "pdf":
+      const lang = "eng";
+      processes.push(
+        PdfOcr(`${__dirname}/input/${file}`)
+          .then((text) => {
+            fs.writeFileSync(`${__dirname}/output/${lang}-${file}.txt`, text);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          })
+      );
+      break;
+    default:
+      languages.forEach((lang) => {
+        processes.push(
+          recognize(`${__dirname}/input/${file}`, {
+            lang,
+            oem: 1,
+            psm: 3,
+          })
+            .then((text) => {
+              fs.writeFileSync(`${__dirname}/output/${lang}-${file}.txt`, text);
+            })
+            .catch((error) => {
+              console.log(error.message);
+            })
+        );
+      });
+  }
 });
+
+console.log("Processing...");
 
 Promise.all(processes)
   .then(() => {

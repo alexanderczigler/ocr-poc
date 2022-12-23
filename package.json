@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/alexanderczigler/ocr-poc#readme",
   "dependencies": {
+    "node-pdf-ocr": "^1.0.0-main",
     "node-tesseract-ocr": "^2.2.1"
   }
 }
