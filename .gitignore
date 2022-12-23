@@ -5,3 +5,6 @@ node_modules
 input/*
 !input/README.md
 !input/sample.*
+
+output/*
+!output/*sample.*

@@ -5,7 +5,7 @@ This is a simple POC for OCR reading images and documents.
 ## Setup
 
 ```shell
-brew install tesseract
+brew install tesseract tesseract-lang
 nvm use
 npm ci
 ```
