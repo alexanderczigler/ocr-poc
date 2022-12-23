@@ -4,6 +4,13 @@ This is a simple POC for OCR reading images and documents.
 
 The Node.js code relies on a couple of NPM packages that in turn act as wrappers around _ghostscript_ and _tesseract_ that perform the actual OCR processing.
 
+**TODO**
+
+- [ ] Change to node lts
+- [ ] Cleanup the Dockerfile
+- [ ] Swe language in PDF processing
+- [ ] Investigate PDF processing performance
+
 ## Setup
 
 ```shell
