@@ -16,7 +16,12 @@ const supportedFormats = [
 const processes = [];
 
 const write = (path, data) => {
-  console.log(`*** Writing ${path}`);
+  console.log();
+  console.log(`--- ${path} ---`);
+  console.log(data);
+  console.log(`--- END ---`);
+  console.log();
+
   fs.writeFileSync(path, data);
 };
 
@@ -35,10 +40,6 @@ fs.readdirSync(`${__dirname}/input`).forEach((file) => {
             quality: 720,
           })
             .then((text) => {
-              console.log(`--- ${language}-${file} ---`);
-              console.log(text);
-              console.log(`--- END ---`);
-
               write(`${__dirname}/output/${language}-${file}.txt`, text);
             })
             .catch((error) => {
