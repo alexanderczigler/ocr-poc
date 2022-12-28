@@ -6,7 +6,7 @@ The Node.js code relies on a couple of NPM packages that in turn act as wrappers
 
 **TODO**
 
-- [ ] Change to node lts
+- [x] Change to node lts
 - [ ] Cleanup the Dockerfile
 - [ ] Swe language in PDF processing
 - [ ] Investigate PDF processing performance
