@@ -15,11 +15,18 @@ const supportedFormats = [
 ];
 const processes = [];
 
+const write = (path, data) => {
+  console.log(`*** Writing ${path}`);
+  fs.writeFileSync(path, data);
+};
+
 fs.readdirSync(`${__dirname}/input`).forEach((file) => {
   const fileExtension = file.split(".").pop();
   if (!supportedFormats.includes(fileExtension)) return; // Skip unsupported formats
 
   languages.forEach((language) => {
+    console.log(`*** Adding ${file} to process queue.`);
+
     switch (fileExtension) {
       case "pdf":
         processes.push(
@@ -28,10 +35,11 @@ fs.readdirSync(`${__dirname}/input`).forEach((file) => {
             quality: 720,
           })
             .then((text) => {
-              fs.writeFileSync(
-                `${__dirname}/output/${language}-${file}.txt`,
-                text
-              );
+              console.log(`--- ${language}-${file} ---`);
+              console.log(text);
+              console.log(`--- END ---`);
+
+              write(`${__dirname}/output/${language}-${file}.txt`, text);
             })
             .catch((error) => {
               console.log(error.message);
@@ -46,10 +54,7 @@ fs.readdirSync(`${__dirname}/input`).forEach((file) => {
             psm: 3,
           })
             .then((text) => {
-              fs.writeFileSync(
-                `${__dirname}/output/${language}-${file}.txt`,
-                text
-              );
+              write(`${__dirname}/output/${language}-${file}.txt`, text);
             })
             .catch((error) => {
               console.log(error.message);
@@ -59,11 +64,9 @@ fs.readdirSync(`${__dirname}/input`).forEach((file) => {
   });
 });
 
-console.log("Processing...");
-
 Promise.all(processes)
   .then(() => {
-    console.log("Done!");
+    console.log("*** Done!");
   })
   .catch((error) => {
     console.error(error);
