@@ -19,36 +19,44 @@ fs.readdirSync(`${__dirname}/input`).forEach((file) => {
   const fileExtension = file.split(".").pop();
   if (!supportedFormats.includes(fileExtension)) return; // Skip unsupported formats
 
-  switch (fileExtension) {
-    case "pdf":
-      const lang = "eng";
-      processes.push(
-        PdfOcr(`${__dirname}/input/${file}`)
-          .then((text) => {
-            fs.writeFileSync(`${__dirname}/output/${lang}-${file}.txt`, text);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          })
-      );
-      break;
-    default:
-      languages.forEach((lang) => {
+  languages.forEach((language) => {
+    switch (fileExtension) {
+      case "pdf":
         processes.push(
-          recognize(`${__dirname}/input/${file}`, {
-            lang,
-            oem: 1,
-            psm: 3,
+          PdfOcr(`${__dirname}/input/${file}`, {
+            language,
+            quality: 720,
           })
             .then((text) => {
-              fs.writeFileSync(`${__dirname}/output/${lang}-${file}.txt`, text);
+              fs.writeFileSync(
+                `${__dirname}/output/${language}-${file}.txt`,
+                text
+              );
             })
             .catch((error) => {
               console.log(error.message);
             })
         );
-      });
-  }
+        break;
+      default:
+        processes.push(
+          recognize(`${__dirname}/input/${file}`, {
+            lang: language,
+            oem: 1,
+            psm: 3,
+          })
+            .then((text) => {
+              fs.writeFileSync(
+                `${__dirname}/output/${language}-${file}.txt`,
+                text
+              );
+            })
+            .catch((error) => {
+              console.log(error.message);
+            })
+        );
+    }
+  });
 });
 
 console.log("Processing...");
